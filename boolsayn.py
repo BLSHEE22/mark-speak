@@ -3,7 +3,7 @@ import sys
 
 ### RUNNING INSTRUCTIONS
 
-### python3 boolsayn.py 'filename' 'number_of_die_sides'
+### python3 boolsayn.py 'text_filename' 'number_of_die_sides'
 
 ### FILENAME OPTIONS
 
