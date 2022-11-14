@@ -4,4 +4,4 @@ Has your friend-group lingo gone overboard? Do you struggle communicating with t
 
 Run instructions:
 
-- python3 boolsayn.py "text_filename" "frequency (2 being the highest, 10 being the lowest)"
+- python3 boolsayn.py "text_filename" "bool_frequency (2 being the highest, 10 being the lowest)"
