@@ -1,5 +1,6 @@
 import random
 import sys
+import os
 
 ### RUNNING INSTRUCTIONS
 
@@ -14,14 +15,28 @@ import sys
 
 ### OPTIONS FOR NUMBER OF DIE SIDES
 
-### 2 - everything not banned is replaced!
-### 3 - two-thirds of non-banned are replaced
-### 4 - half of non-banned are replaced
-### 5 - etc.
+### 2 - every whitelisted word is translated!
+### 3 - a randomly chosen two-thirds of whitelisted words are replaced.
+### 4 - a randomly chosen half of whitelisted words are replaced.
+### ...
+#### X - a randomly chosen two out of X of whitelisted words are replaced.
 
+#GLOBALS
+HEADER = '\033[95m'
+OKBLUE = '\033[94m'
+OKCYAN = '\033[96m'
+OKGREEN = '\033[92m'
+WARNING = '\033[93m'
+FAIL = '\033[91m'
+ENDC = '\033[0m'
+BOLD = '\033[1m'
+UNDERLINE = '\033[4m'
+transWeights = ["2 - every whitelisted word is translated!","3 - a randomly chosen two-thirds of whitelisted words are replaced.",
+                "4 - a randomly chosen half of whitelisted words are replaced.","5 - a randomly chosen two-fifths of whitelisted words are replaced.",
+                "...","X - a randomly chosen two out of X whitelisted words are replaced."]
 artpro = ["a", "an", "and", "the", "i", "i'm", "i've", "i'll", "you", "you're", "you've", "me", "my", "he", "he's", "she", "she's", "we", "we're", "we've", "they", "they're", "they've", "them", "him", "her", "your," "their", "it", "its", "it's"]
 prepos = ["abroad", "about", "above", "across", "after", "against", "ahead", "along", "amidst", "among", "amongst", "apart", "around", "as", "because", "before", "but", "in", "into", "like", "next", "of", "off", "on", "to", "from"] 
-verbs = ["not", "is", "isn't", "are", "aren't", "was", "wasn't", "were", "weren't", "will", "won't", "have", "haven't", "been", "what's", "did", "didn't", "could", "couldn't", "should", "shouldn't", "would", "wouldn't"]
+verbs = ["not", "is", "isn't", "are", "aren't", "was", "wasn't", "were", "weren't", "will", "won't", "has", "hasn't", "have", "haven't", "been", "what's", "did", "didn't", "could", "couldn't", "should", "shouldn't", "would", "wouldn't"]
 adj = ["who", "what", "where", "when", "why", "how", "little", "big", "numerous", "out", "top", "bottom"]
 adv = ["just"]
 
@@ -37,6 +52,8 @@ def read_data(fname):
 def rollDX(words, x):
     i = 1
     newWords = []
+    words = ["\n" if y == "\\n" else y for y in words]
+    #print(words)
     for word in words:
         newWord = ""
         nonAlNum = ""
@@ -114,9 +131,21 @@ def rollDX(words, x):
     return newWords
 
 def main():
-    wordsToBeChecked = read_data(sys.argv[1])
-    result = rollDX(wordsToBeChecked, int(sys.argv[2]))
-    print("\n\n" + "Converting " + sys.argv[1] + " with D" + sys.argv[2] + "...\n\n\n")
+    fileAsk = OKBLUE + "\nWelcome to the Mark-Speak Translator!" + WARNING + "\n\nChoose a file that you want translated.\n\n" + ENDC
+    entries = os.listdir("texts")
+    for x in [y for y in entries if not y == ".DS_Store"]:
+        fileAsk += x + "\n"
+    fileAsk += "\n"
+    fileAns = input(fileAsk)
+    transAsk = WARNING + "\nYou have chosen \"" + fileAns + ".\"\n\nNext, choose a translation weight. Options are from 2 and up.\n\n" + ENDC
+    for x in transWeights:
+        transAsk += x + "\n"
+    transAsk += "\n"
+    transAns = input(transAsk)
+    print(WARNING + "\nYou have chosen option \"" + transAns + ".\" Converting " + fileAns + " to mark-speak with translation weight of 2/" + transAns + "...\n")
+    wordsToBeChecked = read_data("texts/" + fileAns)
+    result = rollDX(wordsToBeChecked, int(transAns))
+    print(OKGREEN + "Here is your translation:\n" + ENDC)
     for x in result:
         print(x + " ", end="")
     print("\n")
