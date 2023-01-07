@@ -5,4 +5,4 @@ Has your friend-group lingo gone overboard? Do you struggle communicating with t
 Instructions:
 - Place the text file that you want translated into the "texts" folder.
 - Then run the program.
---- python3 boolsayn.py
+--> python3 boolsayn.py
