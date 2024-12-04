@@ -15,11 +15,11 @@ import os
 
 ### OPTIONS FOR NUMBER OF DIE SIDES
 
-### 2 - every whitelisted word is translated!
-### 3 - a randomly chosen two-thirds of whitelisted words are replaced.
-### 4 - a randomly chosen half of whitelisted words are replaced.
+### 2 - every available word is replaced!
+### 3 - a randomly chosen two-thirds of available words are replaced.
+### 4 - a randomly chosen half of available words are replaced.
 ### ...
-#### X - a randomly chosen two out of X of whitelisted words are replaced.
+#### X - a randomly chosen two out of X of available words are replaced.
 
 #GLOBALS
 HEADER = '\033[95m'
@@ -31,9 +31,9 @@ FAIL = '\033[91m'
 ENDC = '\033[0m'
 BOLD = '\033[1m'
 UNDERLINE = '\033[4m'
-transWeights = ["2 - every whitelisted word is translated!","3 - a randomly chosen two-thirds of whitelisted words are replaced.",
-                "4 - a randomly chosen half of whitelisted words are replaced.","5 - a randomly chosen two-fifths of whitelisted words are replaced.",
-                "...","X - a randomly chosen two out of X whitelisted words are replaced."]
+transWeights = ["2 - every available word is replaced!","3 - a randomly chosen two-thirds of available words are replaced.",
+                "4 - a randomly chosen half of available words are replaced.","5 - a randomly chosen two-fifths of available words are replaced.",
+                "...","X - a randomly chosen two out of X available words are replaced."]
 artpro = ["a", "an", "and", "the", "i", "i'm", "i've", "i'll", "you", "you're", "you've", "me", "my", "he", "he's", "she", "she's", "we", "we're", "we've", "they", "they're", "they've", "them", "him", "her", "your," "their", "it", "its", "it's"]
 prepos = ["abroad", "about", "above", "across", "after", "against", "ahead", "along", "amidst", "among", "amongst", "apart", "around", "as", "because", "before", "but", "in", "into", "like", "next", "of", "off", "on", "to", "from"] 
 verbs = ["not", "is", "isn't", "are", "aren't", "was", "wasn't", "were", "weren't", "will", "won't", "has", "hasn't", "have", "haven't", "been", "what's", "did", "didn't", "could", "couldn't", "should", "shouldn't", "would", "wouldn't"]
@@ -137,7 +137,8 @@ def main():
         fileAsk += x + "\n"
     fileAsk += "\n"
     fileAns = input(fileAsk)
-    transAsk = WARNING + "\nYou have chosen \"" + fileAns + ".\"\n\nNext, choose a translation weight. Options are from 2 and up.\n\n" + ENDC
+    transAsk = WARNING + "\nYou have chosen \"" + fileAns + ".\"\n\nNext, choose a translation setting. Options are from 2 and up.\n\n" + ENDC
+    transAsk += f"Words that CANNOT be replaced: {artpro + prepos + verbs + adj + adv} \n\n"
     for x in transWeights:
         transAsk += x + "\n"
     transAsk += "\n"
